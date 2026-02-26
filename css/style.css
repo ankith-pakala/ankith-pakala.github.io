@@ -32,6 +32,8 @@ html {
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
+  max-width: 100vw;
+  /* keep viewport width; prevents accidental overflow */
 }
 
 /* ===== Scrollbar (Chrome, Edge, Safari) ===== */
@@ -103,11 +105,8 @@ nav.navbar {
   width: 100% !important;
   display: flex;
   align-items: center;
-  justify-content: centre;
-  padding: 0px 40px;
-  color: #fff;
-  position: fixed !important;
-  top: 0 !important;
+  /* space-between keeps logo on left and links on right, avoids absolute offsets */
+  justify-content: space-between;
   left: 0 !important;
   right: 0 !important;
   height: 90px !important;
@@ -235,10 +234,15 @@ nav.navbar {
 }
 
 .right-section {
-  position: absolute;
-  left: 450px;
-  top: 41%;
-
+  /* avoid fixed offsets that push layout past viewport */
+  position: relative;
+  margin-left: auto;
+  /* push to the right in flex container */
+  left: auto;
+  top: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .left-section,
