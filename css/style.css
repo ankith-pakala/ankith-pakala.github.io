@@ -1,11 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
 
+/* make sizing predictable and keep everything inside viewport */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* images and media should never overflow their containers */
+img,
+video,
+iframe,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 body {
   margin: 0px 0px 0px 0px;
   padding: 0;
   background: #010000;
   font-family: Arial, sans-serif;
   position: relative;
+  overflow-x: hidden;
+  /* prevent horizontal zooming */
 }
 
 
@@ -33,10 +52,11 @@ html {
   background: linear-gradient(180deg, #de1ae1, #7aa2ff);
 }
 
-.phonephoto{
+.phonephoto {
   display: none;
 }
-.mob_Header{
+
+.mob_Header {
   display: none;
 }
 
@@ -57,7 +77,7 @@ header {
   will-change: transform;
 }
 
-nav.navbar{
+nav.navbar {
   border-left: 0px;
   height: 90px !important;
   position: fixed !important;
@@ -73,7 +93,7 @@ nav.navbar{
 }
 
 
-.left-sectio{
+.left-sectio {
   display: none;
 }
 
@@ -92,9 +112,9 @@ nav.navbar{
   right: 0 !important;
   height: 90px !important;
   z-index: 1000 !important;
-  background: rgba(202, 187, 187, 0.104) !important;   
-  backdrop-filter: blur(10px) !important;          
-  -webkit-backdrop-filter: blur(10px) !important;  
+  background: rgba(202, 187, 187, 0.104) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(255, 255, 255, 0.15);
   margin: 0 !important;
   transform: translateZ(0);
@@ -110,9 +130,10 @@ nav.navbar{
 }
 
 
-.mob_Header{
+.mob_Header {
   display: none;
 }
+
 .logo {
   width: 45px;
   height: 45px;
@@ -212,8 +233,8 @@ nav.navbar{
     transform: translateY(-600%);
   }
 }
- 
-.right-section{
+
+.right-section {
   position: absolute;
   left: 450px;
   top: 41%;
@@ -224,6 +245,7 @@ nav.navbar{
 .right-section {
   flex: 1;
 }
+
 .right-section a {
   color: #ccc;
   text-decoration: none;
@@ -234,7 +256,7 @@ nav.navbar{
 }
 
 .rightpart {
-  left:0px;
+  left: 0px;
   padding-right: 2%;
   margin-left: 0%;
 }
@@ -271,7 +293,7 @@ nav.navbar{
     z-index: 1000 !important;
     width: 100% !important;
   }
-  
+
   /* Navbar container */
   .navbar {
     height: 90px;
@@ -290,7 +312,7 @@ nav.navbar{
     gap: 10px;
     align-items: center;
     position: relative;
-    left :22%;
+    left: 22%;
   }
 
   /* Logo smaller */
@@ -307,13 +329,16 @@ nav.navbar{
   }
 
   .roles {
-    display: none; /* hide animated roles on mobile */
-  } 
+    display: none;
+    /* hide animated roles on mobile */
+  }
 
   /* Right section RESET (IMPORTANT) */
   .right-section {
-    position: static;     /* 🔑 remove absolute positioning */
-    display: none;        /* hide desktop menu */
+    position: static;
+    /* 🔑 remove absolute positioning */
+    display: none;
+    /* hide desktop menu */
   }
 
   /* If you later add hamburger menu */
@@ -597,16 +622,17 @@ nav.navbar{
 
 .right {
   padding-top: 200px;
-  width: 1200px;
-  height: 90%;
+  width: 100%;
+  max-width: 950px;
+  height: auto;
   display: flex;
   justify-content: center;
   animation: fadeIn 3.5s ease forwards;
 }
 
 .right img {
-  width: 950px;
-  height: 950px;
+  max-width: 100%;
+  height: auto;
 }
 
 .photo-placeholder {
@@ -686,7 +712,7 @@ nav.navbar{
 
 .about-title {
   margin-bottom: 0;
-    animation: fadeIn 2.5s ease forwards;
+  animation: fadeIn 2.5s ease forwards;
   animation-timeline: view();
   animation-range: entry 0
 }
@@ -706,7 +732,7 @@ nav.navbar{
   height: auto;
   max-width: 100%;
   object-fit: contain;
-    animation: fadeIn 2.5s ease forwards;
+  animation: fadeIn 2.5s ease forwards;
   animation-timeline: view();
   animation-range: entry 0;
   display: block;
@@ -760,6 +786,18 @@ nav.navbar{
   animation-timeline: view();
 }
 
+/* adjust side-box on narrower viewports to avoid horizontal overflow */
+@media (max-width: 1400px) {
+  .side-box {
+    position: static;
+    margin: 40px auto;
+    width: 90%;
+    height: auto;
+    top: auto;
+    left: auto;
+  }
+}
+
 .side-box p {
   font-size: 19px;
 
@@ -797,7 +835,7 @@ body2 {
   height: 1px;
   background: linear-gradient(90deg, transparent, #9f7bff, transparent);
   margin: 40px 0;
-   animation: underlineGrow  cubic-bezier(.34, 1.56, .64, 1) forwards;
+  animation: underlineGrow cubic-bezier(.34, 1.56, .64, 1) forwards;
   animation-timeline: view();
   animation-range: entry 0;
 }
@@ -1827,7 +1865,7 @@ body2 {
 
 /* SECTION */
 .hobbies-section {
-     animation: fadeIn 2.5s ease forwards;
+  animation: fadeIn 2.5s ease forwards;
   animation-timeline: view();
   animation-range: entry 1.5;
   width: 85%;
@@ -1891,7 +1929,7 @@ body2 {
 .My_Gallery {
   height: 100px;
   width: 100%;
-     animation: fadeIn 2.5s ease forwards;
+  animation: fadeIn 2.5s ease forwards;
   animation-timeline: view();
   animation-range: entry 1.5;
 }
@@ -1932,9 +1970,7 @@ body2 {
   width: 100%;
 }
 
-.space_gallery{
-
-}
+.space_gallery {}
 
 .space_gallery {
   transition: background-image 1.5s ease-in-out;
@@ -2213,7 +2249,8 @@ textarea {
 
 .end {
   display: flex;
-  justify-content: center; /* horizontal */
+  justify-content: center;
+  /* horizontal */
   align-items: center;
   color: rgba(225, 225, 225, 0.814)
 }
@@ -2410,9 +2447,10 @@ textarea {
     margin: 110px auto 0;
   }
 
-  div.parttwo{
-  display: none;
+  div.parttwo {
+    display: none;
   }
+
   .intro {
     font-size: 26px;
   }
@@ -2429,8 +2467,9 @@ textarea {
     font-size: 18px;
     margin-top: 18px;
     display: flex;
-  justify-content: center; /* horizontal */
-  align-items: center;
+    justify-content: center;
+    /* horizontal */
+    align-items: center;
 
   }
 
@@ -2438,7 +2477,8 @@ textarea {
     max-width: 100%;
     font-size: 14px;
     margin-top: 10px;
-    justify-content: center; /* horizontal */
+    justify-content: center;
+    /* horizontal */
     align-items: center;
   }
 
@@ -2516,23 +2556,27 @@ textarea {
     display: none;
   }
 
-  .small_body{
+  .small_body {
     font-size: 20px;
   }
+
   .stats-section {
     padding: 60px 16px;
     gap: 24px;
   }
-.skills-subtitle{
-  display: none;
-}
-.skills-title{
-  display: none;
-}
+
+  .skills-subtitle {
+    display: none;
+  }
+
+  .skills-title {
+    display: none;
+  }
+
   .skills-section {
     height: auto;
     padding: 0 16px 40px;
-  
+
   }
 
   .skills-container {
@@ -2913,6 +2957,7 @@ textarea {
     transform: scale(0.92);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -2949,4 +2994,3 @@ textarea {
     font-size: 30px;
   }
 }
-
