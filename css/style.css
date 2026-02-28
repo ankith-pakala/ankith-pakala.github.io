@@ -7,6 +7,21 @@
   box-sizing: border-box;
 }
 
+
+
+
+
+.dddeded{
+  background: linear-gradient(90deg, #5efcff, #9d7bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+}
+
+
+
+
+
+
 /* images and media should never overflow their containers */
 img,
 video,
