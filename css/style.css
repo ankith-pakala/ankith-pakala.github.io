@@ -247,8 +247,19 @@ nav.navbar {
 .right-section {
   /* avoid fixed offsets that push layout past viewport */
   position: relative;
-  margin-left: auto;   /* push to the right in flex container */
-  left: auto;
+  margin-right: 50px;   /* push to the right in flex container */
+  right: 35%;
+  top: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.right-sections{
+  /* avoid fixed offsets that push layout past viewport */
+  position: relative;
+  margin-right: 50px;   /* push to the right in flex container */
+  left:9%;
   top: auto;
   display: flex;
   align-items: center;
@@ -257,6 +268,10 @@ nav.navbar {
 
 .left-section,
 .right-section {
+  flex: 1;
+}
+.left-section,
+.right-sections {
   flex: 1;
 }
 
@@ -268,7 +283,14 @@ nav.navbar {
   transition: 0.3s;
   padding-left: 15px;
 }
-
+.right-sections a {
+  color: #ccc;
+  text-decoration: none;
+  margin-left: 35px;
+  font-size: 20px;
+  transition: 0.3s;
+  padding-left: 15px;
+}
 .rightpart {
   left: 0px;
   padding-right: 2%;
@@ -277,6 +299,12 @@ nav.navbar {
 
 
 .right-section a:hover {
+  cursor: pointer;
+  background: linear-gradient(90deg, #5e00ff, #3d00ff, #7a00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.right-sections a:hover {
   cursor: pointer;
   background: linear-gradient(90deg, #5e00ff, #3d00ff, #7a00ff);
   -webkit-background-clip: text;
