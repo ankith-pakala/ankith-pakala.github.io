@@ -248,7 +248,7 @@ nav.navbar {
   /* avoid fixed offsets that push layout past viewport */
   position: relative;
   margin-right: 50px;   /* push to the right in flex container */
-  right: 35%;
+  right: 25%;
   top: auto;
   display: flex;
   align-items: center;
@@ -259,7 +259,7 @@ nav.navbar {
   /* avoid fixed offsets that push layout past viewport */
   position: relative;
   margin-right: 50px;   /* push to the right in flex container */
-  left:9%;
+  left: 10%;
   top: auto;
   display: flex;
   align-items: center;
