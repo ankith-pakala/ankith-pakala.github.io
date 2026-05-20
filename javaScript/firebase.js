@@ -1,7 +1,3 @@
-
-
-console.log("FIREBASE SCRIPT STARTED");
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -11,6 +7,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+// FIREBASE CONFIG
 const firebaseConfig = {
 
   apiKey: "AIzaSyCMTF2C5Jm7qmoaPN-V7De6m9pTsEgHq7M",
@@ -28,37 +25,102 @@ const firebaseConfig = {
 };
 
 
+// INITIALIZE FIREBASE
 const app = initializeApp(firebaseConfig);
-
-console.log("Firebase Initialized");
 
 const db = getFirestore(app);
 
 
-async function testFirebase() {
+// MAIN FUNCTION
+async function trackVisitor() {
 
   try {
 
-    await addDoc(collection(db, "test"), {
+    // GET IP
+    const ipData = await fetch(
+      "https://api.ipify.org?format=json"
+    );
 
-      message: "Firebase Connected",
+    const ipJson = await ipData.json();
+
+    const ip = ipJson.ip;
+
+    // USER AGENT
+    const userAgent = navigator.userAgent;
+
+    // BROWSER
+    let browser = "Unknown";
+
+    if (userAgent.includes("Chrome")) {
+      browser = "Chrome";
+    }
+
+    // OS
+    let os = "Unknown";
+
+    if (userAgent.includes("Windows")) {
+      os = "Windows";
+    } else if (userAgent.includes("Mac")) {
+      os = "MacOS";
+    }
+
+    // DEVICE
+    let device =
+      /Mobi|Android/i.test(userAgent)
+      ? "Mobile"
+      : "Desktop";
+
+    // VISITOR OBJECT
+    const visitorData = {
+
+      ip: ip,
+
+      browser: browser,
+
+      os: os,
+
+      device: device,
+
+      page: window.location.pathname,
+
+      language: navigator.language,
+
+      onlineStatus: navigator.onLine,
+
+      platform: navigator.platform,
+
+      screenWidth: screen.width,
+
+      screenHeight: screen.height,
+
+      timezone:
+        Intl.DateTimeFormat()
+        .resolvedOptions()
+        .timeZone,
 
       time: new Date().toLocaleString()
 
-    });
+    };
 
-    console.log("SUCCESS");
+    console.log(visitorData);
+
+    // SAVE TO FIREBASE
+    await addDoc(
+      collection(db, "visitors"),
+      visitorData
+    );
+
+    console.log("Saved To Firebase");
 
   }
 
   catch(error) {
 
-    console.error("ERROR:", error);
+    console.error(error);
 
   }
 
 }
 
 
-testFirebase();
-
+trackVisitor();
