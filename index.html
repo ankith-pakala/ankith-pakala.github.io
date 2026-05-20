@@ -766,6 +766,153 @@
 
       <script src="./javaScript/MyGallery.js" defer></script>
 
+      <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// PASTE YOUR FIREBASE CONFIG HERE
+const firebaseConfig = {
+
+  apiKey: "YOUR_API_KEY",
+
+  authDomain: "YOUR_AUTH_DOMAIN",
+
+  projectId: "YOUR_PROJECT_ID",
+
+  storageBucket: "YOUR_STORAGE_BUCKET",
+
+  messagingSenderId: "YOUR_MESSAGING_ID",
+
+  appId: "YOUR_APP_ID"
+
+};
+
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+// TRACK VISITOR
+async function trackVisitor() {
+
+  // PUBLIC IP
+  const ipData = await fetch("https://api.ipify.org?format=json");
+
+  const ipJson = await ipData.json();
+
+  const ip = ipJson.ip;
+
+  // USER AGENT
+  const userAgent = navigator.userAgent;
+
+  // BROWSER
+  let browser = "Unknown";
+
+  if (userAgent.includes("Chrome")) {
+    browser = "Chrome";
+  } else if (userAgent.includes("Firefox")) {
+    browser = "Firefox";
+  } else if (userAgent.includes("Safari")) {
+    browser = "Safari";
+  }
+
+  // OS
+  let os = "Unknown";
+
+  if (userAgent.includes("Windows")) {
+    os = "Windows";
+  } else if (userAgent.includes("Mac")) {
+    os = "MacOS";
+  } else if (userAgent.includes("Android")) {
+    os = "Android";
+  } else if (userAgent.includes("iPhone")) {
+    os = "iPhone";
+  }
+
+  // DEVICE
+  let device = /Mobi|Android/i.test(userAgent)
+    ? "Mobile"
+    : "Desktop";
+
+  // PAGE
+  const page = window.location.pathname;
+
+  // TIME
+  const time = new Date().toLocaleString();
+
+  // EXTRA DATA
+  const language = navigator.language;
+
+  const screenWidth = screen.width;
+
+  const screenHeight = screen.height;
+
+  const platform = navigator.platform;
+
+  const referrer = document.referrer || "Direct Visit";
+
+  const onlineStatus = navigator.onLine;
+
+  const timezone =
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // FINAL DATA
+  const visitorData = {
+
+    ip: ip,
+
+    time: time,
+
+    browser: browser,
+
+    os: os,
+
+    device: device,
+
+    page: page,
+
+    language: language,
+
+    screenWidth: screenWidth,
+
+    screenHeight: screenHeight,
+
+    platform: platform,
+
+    referrer: referrer,
+
+    onlineStatus: onlineStatus,
+
+    timezone: timezone,
+
+    userAgent: userAgent
+
+  };
+
+  console.log(visitorData);
+
+  // SAVE TO FIREBASE
+  await addDoc(
+    collection(db, "visitors"),
+    visitorData
+  );
+
+}
+
+
+// RUN
+trackVisitor();
+
+</script>
 </body>
 
 </html>
