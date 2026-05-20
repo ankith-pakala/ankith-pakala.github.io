@@ -765,12 +765,7 @@
       <script src="./javaScript/cert.js" defer></script>
 
       <script src="./javaScript/MyGallery.js" defer></script>
-
       <script type="module">
-
-// ============================
-// FIREBASE IMPORTS
-// ============================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -781,186 +776,59 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// ============================
 // YOUR FIREBASE CONFIG
-// REPLACE WITH YOUR REAL CONFIG
-// ============================
-
 const firebaseConfig = {
 
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyCMTF2C5Jm7qmoaPN-V7De6m9pTsEgHq7M",
 
-  authDomain: "YOUR_AUTH_DOMAIN",
+  authDomain: "portfolio-visitor-tracke-e0e5a.firebaseapp.com",
 
-  projectId: "YOUR_PROJECT_ID",
+  projectId: "portfolio-visitor-tracke-e0e5a",
 
-  storageBucket: "YOUR_STORAGE_BUCKET",
+  storageBucket: "portfolio-visitor-tracke-e0e5a.firebasestorage.app",
 
-  messagingSenderId: "YOUR_MESSAGING_ID",
+  messagingSenderId: "406072549967",
 
-  appId: "YOUR_APP_ID"
+  appId: "1:406072549967:web:5282d67a263a326588403a"
 
 };
 
 
-// ============================
 // INITIALIZE FIREBASE
-// ============================
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
 
-// ============================
-// TEST FIREBASE CONNECTION
-// ============================
-
-addDoc(collection(db, "test"), {
-  message: "Firebase Working"
-});
-
-
-// ============================
-// TRACK VISITOR FUNCTION
-// ============================
-
-async function trackVisitor() {
+// WRITE TEST DATA
+async function testFirebase() {
 
   try {
 
-    // GET PUBLIC IP
-    const ipData = await fetch(
-      "https://api.ipify.org?format=json"
-    );
+    await addDoc(collection(db, "test"), {
 
-    const ipJson = await ipData.json();
+      message: "Firebase Connected Successfully",
 
-    const ip = ipJson.ip;
+      time: new Date().toLocaleString()
 
-    // USER AGENT
-    const userAgent = navigator.userAgent;
+    });
 
-    // BROWSER
-    let browser = "Unknown";
+    console.log("SUCCESS");
 
-    if (userAgent.includes("Chrome")) {
-      browser = "Chrome";
-    } else if (userAgent.includes("Firefox")) {
-      browser = "Firefox";
-    } else if (userAgent.includes("Safari")) {
-      browser = "Safari";
-    } else if (userAgent.includes("Edge")) {
-      browser = "Edge";
-    }
+  }
 
-    // OPERATING SYSTEM
-    let os = "Unknown";
+  catch(error) {
 
-    if (userAgent.includes("Windows")) {
-      os = "Windows";
-    } else if (userAgent.includes("Mac")) {
-      os = "MacOS";
-    } else if (userAgent.includes("Android")) {
-      os = "Android";
-    } else if (userAgent.includes("iPhone")) {
-      os = "iPhone";
-    } else if (userAgent.includes("Linux")) {
-      os = "Linux";
-    }
-
-    // DEVICE TYPE
-    let device = /Mobi|Android/i.test(userAgent)
-      ? "Mobile"
-      : "Desktop";
-
-    // CURRENT PAGE
-    const page = window.location.pathname;
-
-    // CURRENT TIME
-    const time = new Date().toLocaleString();
-
-    // EXTRA DATA
-    const language = navigator.language;
-
-    const screenWidth = screen.width;
-
-    const screenHeight = screen.height;
-
-    const platform = navigator.platform;
-
-    const referrer =
-      document.referrer || "Direct Visit";
-
-    const onlineStatus = navigator.onLine;
-
-    const timezone =
-      Intl.DateTimeFormat()
-        .resolvedOptions()
-        .timeZone;
-
-    // FINAL VISITOR OBJECT
-    const visitorData = {
-
-      ip: ip,
-
-      time: time,
-
-      browser: browser,
-
-      os: os,
-
-      device: device,
-
-      page: page,
-
-      language: language,
-
-      screenWidth: screenWidth,
-
-      screenHeight: screenHeight,
-
-      platform: platform,
-
-      referrer: referrer,
-
-      onlineStatus: onlineStatus,
-
-      timezone: timezone,
-
-      userAgent: userAgent
-
-    };
-
-    console.log(visitorData);
-
-    // SAVE TO FIREBASE
-    await addDoc(
-      collection(db, "visitors"),
-      visitorData
-    );
-
-    console.log("Visitor saved successfully");
-
-  } catch (error) {
-
-    console.error(
-      "Firebase Error:",
-      error
-    );
+    console.error(error);
 
   }
 
 }
 
 
-// ============================
-// RUN FUNCTION
-// ============================
+testFirebase();
 
-trackVisitor();
-
-</script>
+</script>      
 
 </body>
 
