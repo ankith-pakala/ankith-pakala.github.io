@@ -765,70 +765,8 @@
       <script src="./javaScript/cert.js" defer></script>
 
       <script src="./javaScript/MyGallery.js" defer></script>
-      <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-// YOUR FIREBASE CONFIG
-const firebaseConfig = {
-
-  apiKey: "AIzaSyCMTF2C5Jm7qmoaPN-V7De6m9pTsEgHq7M",
-
-  authDomain: "portfolio-visitor-tracke-e0e5a.firebaseapp.com",
-
-  projectId: "portfolio-visitor-tracke-e0e5a",
-
-  storageBucket: "portfolio-visitor-tracke-e0e5a.firebasestorage.app",
-
-  messagingSenderId: "406072549967",
-
-  appId: "1:406072549967:web:5282d67a263a326588403a"
-
-};
-
-
-// INITIALIZE FIREBASE
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-
-// WRITE TEST DATA
-async function testFirebase() {
-
-  try {
-
-    await addDoc(collection(db, "test"), {
-
-      message: "Firebase Connected Successfully",
-
-      time: new Date().toLocaleString()
-
-    });
-
-    console.log("SUCCESS");
-
-  }
-
-  catch(error) {
-
-    console.error(error);
-
-  }
-
-}
-
-
-testFirebase();
-
-</script>      
+      <script type="module" src="./javaScript/firebase.js"></script>
 
 </body>
 
