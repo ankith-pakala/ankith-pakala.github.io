@@ -1,4 +1,4 @@
-<script type="module">
+
 
 console.log("FIREBASE SCRIPT STARTED");
 
@@ -62,4 +62,3 @@ async function testFirebase() {
 
 testFirebase();
 
-</script>
