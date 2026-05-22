@@ -3,14 +3,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getFirestore,
   collection,
-  addDoc
+  addDoc,
+  updateDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 // FIREBASE CONFIG
 const firebaseConfig = {
 
-  apiKey: "AIzaSyCMTF2C5Jm7qmoaPN-V7De6m9pTsEgHq7M",
+  apiKey: "YOUR_API_KEY",
 
   authDomain: "portfolio-visitor-tracke-e0e5a.firebaseapp.com",
 
@@ -31,6 +33,14 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+// START TIME
+const startTime = Date.now();
+
+
+// STORE FIRESTORE DOC ID
+let visitorDocId = null;
+
+
 // MAIN FUNCTION
 async function trackVisitor() {
 
@@ -45,8 +55,10 @@ async function trackVisitor() {
 
     const ip = ipJson.ip;
 
+
     // USER AGENT
     const userAgent = navigator.userAgent;
+
 
     // BROWSER
     let browser = "Unknown";
@@ -54,21 +66,37 @@ async function trackVisitor() {
     if (userAgent.includes("Chrome")) {
       browser = "Chrome";
     }
+    else if (userAgent.includes("Safari")) {
+      browser = "Safari";
+    }
+    else if (userAgent.includes("Firefox")) {
+      browser = "Firefox";
+    }
+
 
     // OS
     let os = "Unknown";
 
     if (userAgent.includes("Windows")) {
       os = "Windows";
-    } else if (userAgent.includes("Mac")) {
+    }
+    else if (userAgent.includes("Mac")) {
       os = "MacOS";
     }
+    else if (userAgent.includes("Android")) {
+      os = "Android";
+    }
+    else if (userAgent.includes("iPhone")) {
+      os = "iPhone";
+    }
+
 
     // DEVICE
     let device =
-      /Mobi|Android/i.test(userAgent)
+      /Mobi|Android|iPhone/i.test(userAgent)
       ? "Mobile"
       : "Desktop";
+
 
     // VISITOR OBJECT
     const visitorData = {
@@ -98,19 +126,59 @@ async function trackVisitor() {
         .resolvedOptions()
         .timeZone,
 
-      time: new Date().toLocaleString()
+      entryTime: new Date().toLocaleString(),
+
+      exitTime: null,
+
+      timeSpent: 0
 
     };
 
+
     console.log(visitorData);
 
+
     // SAVE TO FIREBASE
-    await addDoc(
+    const docRef = await addDoc(
       collection(db, "visitors"),
       visitorData
     );
 
+
+    // SAVE DOCUMENT ID
+    visitorDocId = docRef.id;
+
+
     console.log("Saved To Firebase");
+
+
+    // UPDATE TIME EVERY 15 SECONDS
+    setInterval(async () => {
+
+      if (!visitorDocId) return;
+
+      const liveTime =
+        Math.floor(
+          (Date.now() - startTime) / 1000
+        );
+
+      await updateDoc(
+        doc(db, "visitors", visitorDocId),
+        {
+
+          timeSpent: liveTime
+
+        }
+      );
+
+      console.log(
+        "Updated Time:",
+        liveTime,
+        "seconds"
+      );
+
+    }, 15000);
+
 
   }
 
@@ -123,4 +191,51 @@ async function trackVisitor() {
 }
 
 
+// TRACK VISITOR
 trackVisitor();
+
+
+// WHEN USER LEAVES WEBSITE
+window.addEventListener(
+  "beforeunload",
+  async () => {
+
+    try {
+
+      if (!visitorDocId) return;
+
+      const finalTime =
+        Math.floor(
+          (Date.now() - startTime) / 1000
+        );
+
+      await updateDoc(
+        doc(db, "visitors", visitorDocId),
+        {
+
+          timeSpent: finalTime,
+
+          onlineStatus: false,
+
+          exitTime:
+            new Date().toLocaleString()
+
+        }
+      );
+
+      console.log(
+        "Final Time Saved:",
+        finalTime,
+        "seconds"
+      );
+
+    }
+
+    catch(error) {
+
+      console.error(error);
+
+    }
+
+  }
+);
